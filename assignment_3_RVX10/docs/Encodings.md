@@ -40,8 +40,4 @@ Assume:
 
 ---
 
-✨ Pro-tip: On GitHub, you can add syntax highlighting to the code fences. For example:  
 
-<pre>
-```text
-0x0091050B
