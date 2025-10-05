@@ -51,24 +51,21 @@ All 10 instructions are **R-type** and use opcode `0x0B` (`CUSTOM-0`):
 
 ---
 
-## Directory Layout
+📁 Directory Layout
 
 Put the three files in one folder (example):
-```
+
 riscv_single/
 ├── riscvsingle.sv
 ├── riscvtest.txt
 └── riscvtest.s        (optional)
-```
 
-> **Important:** The simulation reads `riscvtest.txt` using a **relative path**. Run the simulator **from the folder** that contains the file (or edit the path inside `riscvsingle.sv`).
 
----
+⚠️ Important: The simulation reads riscvtest.txt using a relative path.
+Run the simulator from the folder that contains the file (or edit the path inside riscvsingle.sv).
 
-## Build & Run (Terminal)
-
-### Linux / macOS
-```bash
+🧰 Build & Run (Terminal)
+🐧 Linux / 🍎 macOS
 cd /path/to/riscv_single
 
 # Compile (enable SystemVerilog-2012 support)
@@ -76,68 +73,58 @@ iverilog -g2012 -o cpu_tb riscvsingle.sv
 
 # Run
 vvp cpu_tb
-```
 
-### Windows (PowerShell or CMD)
-```bat
+🪟 Windows (PowerShell or CMD)
 cd C:\path\to\riscv_single
 iverilog -g2012 -o cpu_tb riscvsingle.sv
 vvp cpu_tb
-```
 
-**Expected console output**
-```
+
+✅ Expected console output
+
 Simulation succeeded
-```
 
----
+🧱 Makefile (optional)
 
-## Makefile (optional)
+You can also use the included Makefile:
 
-You can also use the included `Makefile`:
-
-```bash
 make run        # build + run
 make waves      # build + run + open wave.vcd in GTKWave
 make clean      # remove generated files
-```
+
 
 If you prefer not to use Make, just run the iverilog/vvp commands shown above.
 
----
+📊 Waveforms (Optional, with GTKWave)
 
-## Waveforms (Optional, with GTKWave)
+The testbench is set up to dump wave.vcd. To open it:
 
-The testbench is set up to dump `wave.vcd`. To open it:
-
-```bash
 # after running the simulation:
 gtkwave wave.vcd
-```
 
-If you don’t see a VCD file, ensure the following block exists inside `module testbench;` in `riscvsingle.sv`:
-```systemverilog
+
+If you don’t see a VCD file, ensure the following block exists inside module testbench; in riscvsingle.sv:
+
 initial begin
   $dumpfile("wave.vcd");
   $dumpvars(0, testbench);
 end
-```
 
-Rebuild and run again to regenerate the VCD.
 
----
+Rebuild and run again to regenerate the VCD 🔁
 
-## Notes for Students
+🧠 Notes for Students
 
-- This is a **single‑cycle** RV32I subset implementation aimed at instructional use.
-- The provided program image exercises **ALU ops**, **load/store**, and **branches**.
-- Success criterion: a store of value **25** to memory address **100**, which triggers the **“Simulation succeeded”** message from the testbench.
+This is a single-cycle RV32I subset implementation aimed at instructional use.
 
----
+The provided program image exercises ALU ops, load/store, and *branches.
 
-## License / Credits
+✅ Success criterion: a store of value 25 to memory address 100, which triggers the “Simulation succeeded” message from the testbench.
 
-This teaching setup is adapted for course use. Original single‑cycle RISC‑V example design is based on standard educational resources for RV32I.
+📜 License / Credits
+
+This teaching setup is adapted for course use.
+Original single-cycle RISC-V example design is based on standard educational resources for RV32I.
 
 
 
