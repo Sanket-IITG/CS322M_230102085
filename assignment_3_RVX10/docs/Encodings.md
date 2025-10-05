@@ -10,7 +10,10 @@
 - **rs1**    : 5 bits (19..15)  
 - **funct3** : 3 bits (14..12)  
 - **rd**     : 5 bits (11..7)  
-- **opcode** : 7 bits (6..0)  
+- **opcode** : 7 bits (6..0)
+- Machine code is interpreted as:
+
+inst = (funct7 << 25) | (rs2 << 20) | (rs1 << 15) | (funct3 << 12) | (rd << 7) | opcode
 
 > All RVX10 custom instructions use **opcode = `0001011` (0x0B)**.
 
