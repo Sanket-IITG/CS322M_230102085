@@ -25,6 +25,10 @@ inst = (funct7 << 25) | (rs2 << 20) | (rs1 << 15) | (funct3 << 12) | (rd << 7) |
 
 
 ---
+<img width="1213" height="556" alt="image" src="https://github.com/user-attachments/assets/33edffe2-7cf7-43a1-a056-a27fb3a76023" />
+
+<img width="1216" height="667" alt="image" src="https://github.com/user-attachments/assets/b42f91dc-41bb-4d8b-9b19-b77c1358b776" />
+
 
 ## Encoding Table
 
@@ -47,6 +51,10 @@ Assume:
 | 0000011  | 00000 | 10010 | 000    | 10011 | 0001011 | `0x0609098B` | `ABS  x19, x18`   |
 | 0000010  | 00000 | 01001 | 001    | 10100 | 0001011 | `0x04049A0B` | `ROR  x20, x9, x0` |
 | 0000000  | 01001 | 00010 | 000    | 00000 | 0001011 | `0x00910033` | `ADD  x0, x2, x9` |
+
+
+
+
 
 ---
 
