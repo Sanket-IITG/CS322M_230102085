@@ -1,64 +1,57 @@
-# RVX10 — Add 10 New Single-Cycle Instructions to the RV32I Core
+# ⚙️ RISC-V RVX10 — Single-Cycle Extension (RV32I Custom Instructions)
 
-**Short:** this project implements the RVX10 extension — 10 single-cycle instructions encoded in the RISC-V `CUSTOM-0` space — by adding decode, ALU logic, and tests to an RV32I single-cycle core. The goal is an end-to-end implementation: RTL changes, encodings document, testplan, and a self-checking testbench that stores `25` to address `100` on success. (See the full assignment specification for details.) :contentReference[oaicite:1]{index=1}
-
----
-
-## Table of contents
-
-- [Overview](#overview)  
-- [Instruction set (summary)](#instruction-set-summary)  
-- [Repository layout](#repository-layout)  
-- [Prerequisites](#prerequisites)  
-- [Build & Run (recommended)](#build--run-recommended)  
-- [Encoding examples (worked)](#encoding-examples-worked)  
-- [Testing & verification](#testing--verification)  
-- [Deliverables](#deliverables)  
-- [Checklist & notes](#checklist--notes)  
-- [Troubleshooting](#troubleshooting)  
-- [License & contact](#license--contact)
+Welcome! 🎉  
+This project extends a **single-cycle RISC-V RV32I CPU** with **10 new custom single-cycle instructions (RVX10)** using the `CUSTOM-0` opcode space.  
+It includes source code, a testbench, and a memory image for simulation.
 
 ---
 
-## Overview
+## 📁 Files Included
 
-This project extends an RV32I single-cycle core with the **RVX10** instruction set (in the `CUSTOM-0` opcode space). The extension must:
+- `riscvsingle.sv` — SystemVerilog source with the **CPU + testbench**.  
+  The top testbench module is `testbench`, which instantiates `top` (the CPU).
+- `rvx10.hex` — **Instruction memory image** loaded using `$readmemh`.  
+  Contains all test programs for the new RVX10 instructions.
+- `rvx10.s` — (optional) **Assembly source** for `rvx10.hex` (for reference).
+- `Makefile` — simple build and run commands.
+- `README.md` — this file 😄
 
-- Use only existing datapath blocks (adder/shifter/comparator/logic) and single-cycle semantics.
-- Not add architectural state beyond registers (no new CSRs or flags).
-- Add decode logic, ALU operations, and a self-checking test program.
-- On successful simulation the testbench should store the value `25` to memory address `100` (the provided harness prints “Simulation succeeded”).
-
-See the assignment spec for the canonical encoding table, operation semantics, and test harness details. :contentReference[oaicite:2]{index=2}
-
----
-
-## Instruction set (summary)
-
-All RVX10 instructions use the **R-type** shape with `opcode = 0x0B` (`CUSTOM-0`) and are single-cycle ALUtoRD operations:
-
-| Name | Semantics (32-bit) | Type | funct7 | funct3 |
-|------|---------------------|------|--------|--------|
-| ANDN | `rd = rs1 & ~rs2` | R | `0000000` | `000` |
-| ORN  | `rd = rs1 | ~rs2` | R | `0000000` | `001` |
-| XNOR | `rd = ~(rs1 ^ rs2)` | R | `0000000` | `010` |
-| MIN  | signed min | R | `0000001` | `000` |
-| MAX  | signed max | R | `0000001` | `001` |
-| MINU | unsigned min | R | `0000001` | `010` |
-| MAXU | unsigned max | R | `0000001` | `011` |
-| ROL  | rotate left by `rs2[4:0]` | R | `0000010` | `000` |
-| ROR  | rotate right by `rs2[4:0]` | R | `0000010` | `001` |
-| ABS  | absolute value (rs2 = x0) | R (unary) | `0000011` | `000` |
-
-**Notes:**
-- Encode ABS as R-type with `rs2 = x0`. Hardware should ignore `rs2` for `funct7 = 0000011`.
-- Define rotate-by-0 to return `rs1` (avoid 32-bit shifts).
-- `ABS(INT_MIN)` (`0x80000000`) returns `0x80000000` (two’s complement wrap).
-- Writes to `x0` must be ignored.
-
-(Full spec — semantics, sketches, and examples — are in the assignment doc.) :contentReference[oaicite:3]{index=3}
+✅ **Simulation passes** when the CPU stores the value **25 (0x19)** to **address 100 (0x64)** — this triggers the message **“Simulation succeeded”** in the console.
 
 ---
 
-## Repository layout (recommended)
+## 🧠 New RVX10 Instructions
+
+All 10 instructions are **R-type** and use opcode `0x0B` (`CUSTOM-0`):
+
+| Instruction | Description | Operation |
+|--------------|--------------|------------|
+| ANDN  | Bitwise AND with inverted rs2 | `rd = rs1 & ~rs2` |
+| ORN   | Bitwise OR with inverted rs2  | `rd = rs1 | ~rs2` |
+| XNOR  | Bitwise XNOR                  | `rd = ~(rs1 ^ rs2)` |
+| MIN   | Signed minimum                | `rd = (rs1 < rs2) ? rs1 : rs2` |
+| MAX   | Signed maximum                | `rd = (rs1 > rs2) ? rs1 : rs2` |
+| MINU  | Unsigned minimum              | `rd = (rs1 <u rs2) ? rs1 : rs2` |
+| MAXU  | Unsigned maximum              | `rd = (rs1 >u rs2) ? rs1 : rs2` |
+| ROL   | Rotate left                   | `rd = (rs1 << sh) | (rs1 >> (32-sh))` |
+| ROR   | Rotate right                  | `rd = (rs1 >> sh) | (rs1 << (32-sh))` |
+| ABS   | Absolute value (rs2 ignored)  | `rd = (rs1[31]) ? -rs1 : rs1` |
+
+📝 *All execute in a single cycle and reuse the existing ALU datapath.*
+
+---
+
+## 🧰 Requirements
+
+- **Icarus Verilog** (`iverilog` and `vvp`)
+  - Ubuntu / Debian → `sudo apt install iverilog`
+  - macOS → `brew install icarus-verilog`
+  - Windows → install from official site or MSYS2  
+- (Optional) **GTKWave** for waveform viewing → `sudo apt install gtkwave` or `brew install gtkwave`
+
+---
+
+## 📂 Folder Structure
+
+
 
