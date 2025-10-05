@@ -54,11 +54,16 @@ All 10 instructions are **R-type** and use opcode `0x0B` (`CUSTOM-0`):
 ## 📁 Directory Layout
 
 Put the three files in one folder (example):
-
+```
 riscv_single/
 ├── riscvsingle.sv
 ├── riscvtest.txt
 └── riscvtest.s        (optional)
+```
+
+
+
+---
 
 
  ⚠️ Important: The simulation reads riscvtest.txt using a relative path.
@@ -66,7 +71,15 @@ Run the simulator from the folder that contains the file (or edit the path insid
 
 ## 🧰 Build & Run (Terminal)
 🐧 Linux / 🍎 macOS
+```bash
 cd /path/to/riscv_single
+
+# Compile (enable SystemVerilog-2012 support)
+iverilog -g2012 -o cpu_tb riscvsingle.sv
+
+# Run
+vvp cpu_tb
+```
 
 # Compile (enable SystemVerilog-2012 support)
 iverilog -g2012 -o cpu_tb riscvsingle.sv
@@ -75,9 +88,11 @@ iverilog -g2012 -o cpu_tb riscvsingle.sv
 vvp cpu_tb
 
 ## 🪟 Windows (PowerShell or CMD)
+```bat
 cd C:\path\to\riscv_single
 iverilog -g2012 -o cpu_tb riscvsingle.sv
 vvp cpu_tb
+```
 
 
  ✅ Expected console output
@@ -88,9 +103,11 @@ Simulation succeeded
 
 You can also use the included Makefile:
 
+```bash
 make run        # build + run
 make waves      # build + run + open wave.vcd in GTKWave
 make clean      # remove generated files
+```
 
 
 If you prefer not to use Make, just run the iverilog/vvp commands shown above.
@@ -99,16 +116,17 @@ If you prefer not to use Make, just run the iverilog/vvp commands shown above.
 
 The testbench is set up to dump wave.vcd. To open it:
 
-# after running the simulation:
+ after running the simulation:
 gtkwave wave.vcd
 
 
-If you don’t see a VCD file, ensure the following block exists inside module testbench; in riscvsingle.sv:
-
+If you don’t see a VCD file, ensure the following block exists inside `module testbench;` in `riscvsingle.sv`:
+```systemverilog
 initial begin
   $dumpfile("wave.vcd");
   $dumpvars(0, testbench);
 end
+```
 
 
 Rebuild and run again to regenerate the VCD 🔁
