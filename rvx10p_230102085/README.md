@@ -40,7 +40,22 @@ Implements **10 new instructions** under the **RISC-V CUSTOM-0** opcode:
 ## 🗂️ Directory Layout
 
 
-<pre> ``` rvx10_P/ ├── src/ │ ├── datapath.sv # Main datapath (pipeline structure) │ ├── riscvpipeline.sv # Top-level integration module │ ├── controller.sv # Instruction decode and control signals │ ├── forwarding_unit.sv # Forwarding logic for hazards │ └── hazard_unit.sv # Load-use hazard detection/stall unit ├── tb/ │ ├── tb_pipeline.sv # Simple testbench │ └── tb_pipeline_hazard.sv # Extended hazard verification ├── tests/ │ ├── rvx10_pipeline.hex # Functional test program │ └── rvx10_hazard_test.hex # Intensive hazard validation ├── docs/ │ └── REPORT.md # Full design documentation └── README.md # This file ``` </pre>
+rvx10_P/
+├── src/
+│ ├── datapath.sv # Main datapath (pipeline structure)
+│ ├── riscvpipeline.sv # Top-level integration module
+│ ├── controller.sv # Instruction decode and control signals
+│ ├── forwarding_unit.sv # Forwarding logic for hazards
+│ └── hazard_unit.sv # Load-use hazard detection/stall unit
+├── tb/
+│ ├── tb_pipeline.sv # Simple testbench
+│ └── tb_pipeline_hazard.sv # Extended hazard verification
+├── tests/
+│ ├── rvx10_pipeline.hex # Functional test program
+│ └── rvx10_hazard_test.hex # Intensive hazard validation
+├── docs/
+│ └── REPORT.md # Full design documentation
+└── README.md # This file
 
 
 **🔧 Setup Guide**
